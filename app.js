@@ -1,6 +1,7 @@
 //imports
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv/config');
 
 //intialise express
 const app = express();
@@ -18,9 +19,11 @@ app.get('/', (req, res) => {
 
 //CONNECT TO DATABASE
 //mongoose a package that helps to connect database
-mongoose.connect('datadase url', { useNewUrlParser: true }, () => {
-  console.log('connected to DB');
-});
+mongoose.connect(
+    process.env.DB_CONNECTION, 
+    { useNewUrlParser: true }, 
+    () => {console.log('connected to DB');}
+);
 
 //post request to submit data
 app.get('/', (req, res) => {

@@ -7,6 +7,8 @@ require('dotenv/config');
 const app = express();
 
 //import middleware --function that excutes when routes are being hit
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 const postRoute = require('./routes/postsRoute');
 
 

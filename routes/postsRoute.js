@@ -1,5 +1,6 @@
 //imports
 const express = require('express');
+const Posts = require('../models/postModel');
 
 const router = express.Router();
 
@@ -9,11 +10,10 @@ router.get('/', (req, res) => {
     res.send('Hello World');
   });
 
-  router.get('/specific', (req, res) => {
-    res.send('Specific posts');
-  });
-
-
+//post request
+router.post('/', (req,res) => {
+  console.log(req.body);
+})
 
 //exporting module- making available in other files
 module.exports = router;

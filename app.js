@@ -24,7 +24,7 @@ app.get('/', (req,res) => {
 })
 
 //instantiating routes
-app.use('/posts', postRoute);
+app.use('/posts', postRoute); 
 
 
 //setting where the server listens

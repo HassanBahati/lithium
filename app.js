@@ -2,14 +2,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv/config');
+const cors = require('cors');
 
 //intialise express
 const app = express();
 
-//import middleware --function that excutes when routes are being hit
+//middleware --function that excutes when routes are being hit
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(cors());
+
+//importing routes
 const postRoute = require('./routes/postsRoute');
+
 
 
 //CONNECT TO DATABASE
@@ -35,3 +40,4 @@ app.listen(3000, () => {
 });
 
 //NPM install dotenv
+//npm install cors

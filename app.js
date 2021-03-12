@@ -6,16 +6,9 @@ require('dotenv/config');
 //intialise express
 const app = express();
 
-// //middleware --function that ecutes when routes are being hit
-// app.use('/posts', () => {
-//     console.log('this is a middleware running')
-// })
+//import middleware --function that excutes when routes are being hit
+const postRoute = require('./routes/postsRoute');
 
-//ROUTES
-//get request to return data to browser
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 
 //CONNECT TO DATABASE
 //mongoose a package that helps to connect database
@@ -25,10 +18,14 @@ mongoose.connect(
     () => {console.log('connected to DB');}
 );
 
-//post request to submit data
-app.get('/', (req, res) => {
-  res.send('We are on posts');
-});
+//route
+app.get('/', (req,res) => {
+    res.send('We are on home route');
+})
+
+//instantiating routes
+app.use('/posts', postRoute);
+
 
 //setting where the server listens
 app.listen(3000, () => {

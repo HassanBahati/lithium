@@ -1,7 +1,7 @@
 //imports
 const mongoose = require('mongoose');
 
-//schema -- represents how the data looks
+//schema -- structure and how the data is expected to look 
 const postSchema = mongoose.Schema({
     title: {
         type: String,

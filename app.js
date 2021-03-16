@@ -25,10 +25,10 @@ mongoose.connect(
     () => {console.log('connected to DB');}
 );
 
-//route
+//primary route
 app.get('/', (req,res) => {
     res.send('We are on home route');
-})
+});
 
 //instantiating routes
 app.use('/posts', postRoute); 
@@ -38,6 +38,3 @@ app.use('/posts', postRoute);
 app.listen(3000, () => {
   console.log('server listening on port 3000');
 });
-
-//NPM install dotenv
-//npm install cors

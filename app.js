@@ -15,7 +15,11 @@ app.use(cors());
 //importing routes
 const postRoute = require('./routes/postsRoute');
 
+// Static folder
+app.use(express.static(__dirname + '/views/'));
 
+//
+app.set('view engine', 'html');
 
 //CONNECT TO DATABASE
 //mongoose a package that helps to connect database

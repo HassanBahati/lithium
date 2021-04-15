@@ -13,12 +13,12 @@ app.use(express.urlencoded({extended:true}));
 app.use(cors());
 
 //importing routes
-const postRoute = require('./routes/postsRoute');
+const ordersRoute = require('./routes/orderRoute');
 
 // Static folder
 app.use(express.static(__dirname + '/views/'));
 
-//
+//setting html as a templeting engine 
 app.set('view engine', 'html');
 
 //CONNECT TO DATABASE
@@ -31,12 +31,11 @@ mongoose.connect(
 
 //primary route
 app.get('/', (req,res) => {
-    res.send('We are on home route');
+    res.sendFile('index');
 });
 
 //instantiating routes
-app.use('/posts', postRoute); 
-
+app.use('/orders', ordersRoute); 
 
 //setting where the server listens
 app.listen(3000, () => {

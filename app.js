@@ -4,9 +4,39 @@ const mongoose = require('mongoose');
 require("dotenv").config()
 const cors = require('cors');
 const bodyParser = require("body-parser");
+const passport = require('passport');
 
 //intialise express
 const app = express();
+
+//importing routes
+const ordersRoute = require('./routes/orderRoute');
+const registerRoute = require('./routes/registerRoutes');
+const loginRoute = require('./routes/loginRoutes');
+
+//reg model
+const Registration = require('./models/usersModel');
+
+//require expre session 
+const expressSession = require('express-session')({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+});
+
+//middleware --function that excutes when routes are being hit
+app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(expressSession);
+
+//passport congifgurations
+passport.use(Registration.createStrategy());
+passport.serializeUser(Registration.serializeUser());
+passport.deserializeUser(Registration.deserializeUser());
 
 //for cross origin resource sharing 
 app.use(function(req, res, next) {
@@ -34,15 +64,6 @@ db.on("error", (error) => {
   console.log("Failed to connect to db", error )
 });
 
-//middleware --function that excutes when routes are being hit
-app.use(express.json())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
-
-//importing routes
-const ordersRoute = require('./routes/orderRoute');
-
 // Static folder
 app.use(express.static(__dirname + '/views/'));
 
@@ -54,8 +75,28 @@ app.get('/', (req,res) => {
     res.sendFile('index');
 });
 
+//incase a route doesnt exist
+app.get('*', (req, res) => {
+  res.send('the route specified doesnt exist');
+});
+
+//logout route 
+app.post('/logout', (req, res) => {
+  if (req.session) {
+      const logout = req.session.destroy((err)=> {
+          if (err) {
+              console.log(err)
+          }
+
+res.json(logout)
+      })
+  }
+});
+
 //instantiating routes
 app.use('/orders', ordersRoute); 
+app.use('/register', registerRoute);
+app.use('/login', loginRoute);
 
 //setting where the server listens
 app.listen(3000, () => {
